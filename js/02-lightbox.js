@@ -2,10 +2,11 @@ import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
 console.log(galleryItems);
+
 const galleryList = document.querySelector('.gallery');
 
-function createGallery(galleryItems, galleryCb) {
-  const addImages = galleryItems
+function createGallery(galleryItems) {
+  return galleryItems
     .map(
       (image) => `
           <a class="gallery__item" href="${image.original}">
@@ -16,19 +17,11 @@ function createGallery(galleryItems, galleryCb) {
   `
     )
     .join('');
-  galleryCb.insertAdjacentHTML('afterbegin', addImages);
 }
-createGallery(galleryItems, galleryList);
+const addImages = createGallery(galleryItems);
+galleryList.insertAdjacentHTML('afterbegin', addImages);
 
-galleryList.addEventListener('click', (e) => {
-  e.preventDefault();
-  const isGalleryImage = e.target.classList.contains('gallery__image');
-  if (!isGalleryImage) {
-    return;
-  }
-
-  let lightbox = new SimpleLightbox('.gallery__item', {
-    captionsData: 'alt',
-    captionDelay: 250,
-  });
+let lightbox = new SimpleLightbox('.gallery__item', {
+  captionsData: 'alt',
+  captionDelay: 250,
 });
